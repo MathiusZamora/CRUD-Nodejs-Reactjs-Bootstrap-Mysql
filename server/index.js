@@ -27,7 +27,7 @@ app.post("/create",(req,res)=>{
         if(err){
             console.log(err);
         }else{
-            res.send("empleado registrado con exito!!");
+            res.send(result);
             }
 
         }
@@ -37,6 +37,42 @@ app.post("/create",(req,res)=>{
 app.get("/clientes",(req,res)=>{
 
     db.query('SELECT * FROM clientes',
+    (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send(result);
+            }
+
+        }
+        );
+});
+
+app.put("/update",(req,res)=>{
+    const id = req.body.id;
+    const nombre = req.body.nombre;
+    const fecha = req.body.fecha;
+    const membresia = req.body.membresia;
+    const telefono = req.body.telefono;
+
+    db.query('UPDATE clientes SET nombre=?,fecha=?,membresia=?,telefono=? WHERE id=?', [nombre,fecha,membresia,telefono, id],
+    (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send(result);
+            }
+
+        }
+        );
+});
+
+
+app.delete("/delete/:id",(req,res)=>{
+    const id = req.params.id;
+    
+
+    db.query('DELETE FROM clientes WHERE id=?',id,
     (err,result)=>{
         if(err){
             console.log(err);
